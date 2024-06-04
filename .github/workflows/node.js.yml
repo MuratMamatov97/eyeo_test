@@ -31,8 +31,8 @@ jobs:
       run: |
           curl -L https://distpartners-minio-1.uplink.eyeo.it/eyeo-browser-ad-filtering-releases/Chromium-126.0.6465.0.dmg -o Chromium.dmg
     - name: Install Custom Browser
-      run: mounted_volume = $(hdiutil mount Chromium.dmg)
+      run: &mounted_volume (hdiutil mount Chromium.dmg)
     - run: |
         npx codeceptjs run -o <<EOF
-        {"helpers": {"Playwright": {"browser": $mounted_volume }}}
+        {"helpers": {"Playwright": {"browser": *mounted_volume }}}
         EOF
