@@ -28,7 +28,8 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - name: Download Custom Chromium
-      run: curl -L "https://www.google.com/url?sa=D&q=https://distpartners-minio-1.uplink.eyeo.it/eyeo-browser-ad-filtering-releases/Chromium-126.0.6465.0.dmg&ust=1717587360000000&usg=AOvVaw2-rHK3436YHMYK04zUG0HO&hl=en-GB&source=gmail" "Chromium.dmg"
+      run: |
+          curl -L https://www.google.com/url?sa=D&q=https://distpartners-minio-1.uplink.eyeo.it/eyeo-browser-ad-filtering-releases/Chromium-126.0.6465.0.dmg&ust=1717587360000000&usg=AOvVaw2-rHK3436YHMYK04zUG0HO&hl=en-GB&source=gmail -o Chromium.dmg
     - name: Install Custom Browser
       run: hdiutil mount Chromium.dmg
     - run: npm run codeceptjs
