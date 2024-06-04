@@ -24,7 +24,7 @@ export const config: CodeceptJS.MainConfig = {
       timeout: 15000,
       chromium: {
         downloadsPath: './output',
-        executablePath: '/Users/murat/Downloads/Chromium.app/Contents/MacOS/Chromium',
+        executablePath: 'Chromium.app/Contents/MacOS/Chromium',
         args: [`--no-sandbox`]
       }
     },
