@@ -34,5 +34,5 @@ jobs:
       run: mounted_volume = $(hdiutil mount Chromium.dmg)
     - run: |
         npx codeceptjs run -o <<EOF
-        {"helpers": {"Playwright": {"browser": ${{mounted_volume}} }}}
+        {"helpers": {"Playwright": {"browser": $mounted_volume }}}
         EOF
