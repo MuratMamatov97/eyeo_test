@@ -34,5 +34,5 @@ jobs:
       run: |
         mounted_volume=$(hdiutil mount Chromium.dmg)
     - run: |
-        echo "Mounted volume path: ${mounted_volume}" 
+        echo "Mounted volume path: ${{mounted_volume}}" 
         npx codeceptjs run -o '{"helpers": {"Playwright": {"chromium": {"executablePath": "${mounted_volume}"}}}}' 
