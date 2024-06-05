@@ -37,5 +37,5 @@ jobs:
         mounted_volume=$(cat "$tempfile" | grep 'mount-point' | cut -d ' ' -f 3)
     - run: |
         npx codeceptjs run -o <<EOF
-        '{"helpers": {"Playwright": {"browser":" ${{ mounted_volume }} "}}}'
+        '{"helpers": {"Playwright": {"browser":"Volumes/Chromium"}}}'
         EOF
