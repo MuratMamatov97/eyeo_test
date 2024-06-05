@@ -34,7 +34,7 @@ jobs:
       id: install_browser
       run: |
         MOUNT_OUTPUT=$(hdiutil mount Chromium.dmg)
-        MOUNT_POINT=$(echo "$MOUNT_OUTPUT" | grep -o 'Volumes/.*')
+        MOUNT_POINT=$(echo "$MOUNT_OUTPUT" | grep -o '*')
         echo "::set-output name=mount_result::$MOUNT_POINT"
     - run: |
         echo "Mounted volume path: ${{steps.install_browser.outputs.mount_result}}" 
