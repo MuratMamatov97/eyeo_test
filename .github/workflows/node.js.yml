@@ -36,5 +36,5 @@ jobs:
         hdiutil mount Chromium.dmg 2>&1 > $tempfile
         mounted_volume=$(cat "$tempfile" | grep 'mount-point' | cut -d ' ' -f 3)
     - run: |
-        echo "Mounted volume path: $mounted_volume" 
+        echo "Mounted volume path: "${mounted_volume}"" 
         npx codeceptjs run -o '{"helpers": {"Playwright": {"chromium": {"executablePath": "${mounted_volume}"}}}}' 
