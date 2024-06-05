@@ -33,7 +33,8 @@ jobs:
     - name: Install Custom Browser
       id: install_browser
       run: |
-        MOUNTED_VOLUME=$(hdiutil mount Chromium.dmg)
+        MOUNT_OUTPUT=$(hdiutil mount Chromium.dmg | tee /dev/tty)
+        echo "::set-output name=mount_result::$MOUNT_OUTPUT"
     - run: |
-        echo "Mounted volume path: ${{steps.install_browser.outputs.mounted_volume}}" 
+        echo "Mounted volume path: ${{steps.install_browser.outputs.mount_result}}" 
         npx codeceptjs run -o '{"helpers": {"Playwright": {"chromium": {"executablePath": "${mounted_volume}"}}}}' 
