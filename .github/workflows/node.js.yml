@@ -33,7 +33,7 @@ jobs:
     - name: Install Custom Browser
       id: install_browser
       run: |
-        MOUNT_OUTPUT=$(hdiutil mount Chromium.dmg)
+        MOUNT_OUTPUT=$(hdiutil mount -readwrite Chromium.dmg)
         MOUNT_POINT=$(echo "$MOUNT_OUTPUT" | grep -Eo '/Volumes/[^ ]+')
         echo "::set-output name=mount_point::$MOUNT_POINT"
     - run: |
