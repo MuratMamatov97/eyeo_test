@@ -27,15 +27,30 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
+    
+    - name: Create temporary directory
+      run: mkdir -p /tmp/chrome_install
+      
     - name: Download Custom Chromium
       run: |
-          curl -L https://distpartners-minio-1.uplink.eyeo.it/eyeo-browser-ad-filtering-releases/Chromium-126.0.6465.0.dmg -o Chromium.dmg
-    - name: Install Custom Browser
-      id: install_browser
+          curl -o /tmp/chrome_install/chromium.dmg https://distpartners-minio-1.uplink.eyeo.it/eyeo-browser-ad-filtering-releases/Chromium-126.0.6465.0.dmg
+          
+    - name: Mount Custom Chromium
+      id: mount_dmg
       run: |
-        MOUNT_OUTPUT=$(hdiutil mount -readwrite Chromium.dmg)
+        MOUNT_OUTPUT=$(hdiutil attach /tmp/chrome_install/chromium.dmg -nobrowse)
+        echo "$MOUNT_OUTPUT"
         MOUNT_POINT=$(echo "$MOUNT_OUTPUT" | grep -Eo '/Volumes/[^ ]+')
         echo "::set-output name=mount_point::$MOUNT_POINT"
-    - run: |
+        
+    - name: Copy Chromium to Applications
+      run: |
+        MOUNT_POINT=${{ steps.mount_dmg.outputs.mount_point }}
+        cp -R "$MOUNT_POINT/Chromium.app" /Applications/
+
+    - name: Run CodeceptJS tests
+      env: 
+        CHROME_BIN: /Applications/Chromium.app/Contents/MacOS/Chromium
+      run: |
         echo "Mounted volume path: ${{steps.install_browser.outputs.mount_point}}" 
-        npx codeceptjs run -o '{"helpers": {"Playwright": {"chromium": {"executablePath": "${{steps.install_browser.outputs.mount_point}}.app/Contens/MacOS/Chromium" }}}}' 
+        npx codeceptjs run
