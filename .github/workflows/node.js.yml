@@ -35,7 +35,7 @@ jobs:
       run: |
         MOUNT_OUTPUT=$(hdiutil mount Chromium.dmg)
         MOUNT_POINT=$(echo "$MOUNT_OUTPUT" | grep -o '.*')
-        echo "::set-output name=mount_result::$MOUNT_POINT"
+        echo "::set-output name=mount_point::$MOUNT_POINT"
     - run: |
-        echo "Mounted volume path: ${{steps.install_browser.outputs.mount_result}}" 
-        npx codeceptjs run -o '{"helpers": {"Playwright": {"chromium": {"executablePath": ${{steps.install_browser.outputs.mount_result}} }}}}' 
+        echo "Mounted volume path: ${{steps.install_browser.outputs.mount_point}}" 
+        npx codeceptjs run -o '{"helpers": {"Playwright": {"chromium": {"executablePath": ${{steps.install_browser.outputs.mount_point}} }}}}' 
